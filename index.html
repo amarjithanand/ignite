@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ignite | Ideas Worth Spreading</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500&display=swap');
+
+        :root {
+            --ted-red: #eb0028;
+            --ted-black: #000000;
+            --bg-light: #ffffff;
+            --bg-dark: #0a0a0a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .dark {
+            background-color: var(--bg-dark);
+            color: #f1f5f9;
+        }
+
+        .light {
+            background-color: var(--bg-light);
+            color: #1e293b;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .glass {
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .talk-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .red-accent {
+            color: var(--ted-red);
+        }
+
+        .bg-ted-red {
+            background-color: var(--ted-red);
+        }
+
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--ted-red);
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 30px;
+            font-weight: 600;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body class="light">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 glass" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+            <div class="nav-logo text-3xl font-bold tracking-tighter flex items-center gap-1">
+                <span class="text-red-600">IGNITE</span><span class="text-xs mt-2 uppercase tracking-widest opacity-70">Talks</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-10 font-medium text-sm uppercase tracking-wider">
+                <a href="#home" class="hover:text-red-600 transition-colors">Watch</a>
+                <a href="#about" class="hover:text-red-600 transition-colors">Discover</a>
+                <a href="#events" class="hover:text-red-600 transition-colors">Attend</a>
+                <a href="#nominate" class="hover:text-red-600 transition-colors">Nominate</a>
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+
+            <button class="md:hidden text-2xl" id="menuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 z-[60] bg-white dark:bg-black flex flex-col items-center justify-center gap-8 text-2xl font-bold hidden">
+        <button class="absolute top-6 right-6 text-3xl" id="closeMenu"><i class="fas fa-times"></i></button>
+        <a href="#home" class="mobile-link">Watch</a>
+        <a href="#about" class="mobile-link">Discover</a>
+        <a href="#events" class="mobile-link">Attend</a>
+        <a href="#nominate" class="mobile-link">Nominate</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20 bg-black text-white relative overflow-hidden">
+        <!-- Abstract Background -->
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-0 -left-20 w-96 h-96 bg-red-600 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-0 -right-20 w-96 h-96 bg-red-900 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="space-y-8 reveal active">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-red-600 text-white text-xs font-bold uppercase tracking-widest">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                    </span>
+                    Live Now: The Future of AI
+                </div>
+                <h1 class="text-6xl md:text-8xl font-extrabold leading-none">
+                    Ideas worth <br><span class="text-red-600">spreading.</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-lg leading-relaxed font-light">
+                    Join a global community of curious minds. Explore thousands of talks from world-class thinkers and doers.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <button class="px-10 py-4 bg-red-600 text-white font-bold uppercase tracking-widest hover:bg-red-700 transition-all shadow-xl">Start Watching</button>
+                    <button class="px-10 py-4 border-2 border-white text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">Attend Event</button>
+                </div>
+            </div>
+            
+            <div class="relative reveal active hidden lg:block">
+                <div class="group cursor-pointer relative rounded-lg overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1475721027785-f74dea327912?auto=format&fit=crop&q=80&w=1000" alt="Speaker" class="w-full h-[450px] object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center text-white text-2xl pl-1">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-8 left-8 text-left">
+                        <p class="text-red-600 font-bold uppercase tracking-widest text-sm mb-1">Featured Talk</p>
+                        <h3 class="text-2xl font-bold">Why curiosity is the key to the future</h3>
+                        <p class="text-gray-400 text-sm">Dr. Sarah Jenkins • 18:42</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="about" class="py-24 px-6 border-b dark:border-gray-800">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-16 items-center">
+            <div class="md:col-span-2 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-8">We believe in the power of ideas to change attitudes, lives, and, ultimately, the world.</h2>
+                <div class="grid sm:grid-cols-2 gap-8 text-gray-500 dark:text-gray-400">
+                    <p>Our platform is a clearinghouse of free knowledge from the world's most inspired thinkers — and a community of curious souls to engage with ideas and each other.</p>
+                    <p>What began as a small conference in 1984 has grown into a global movement supported by millions of people who believe that knowledge is for everyone.</p>
+                </div>
+            </div>
+            <div class="reveal bg-gray-50 dark:bg-gray-900 p-10 border-l-4 border-red-600">
+                <h4 class="text-5xl font-bold text-red-600 mb-2">3k+</h4>
+                <p class="font-bold uppercase tracking-tighter text-sm mb-6">Talks Available</p>
+                <h4 class="text-5xl font-bold text-red-600 mb-2">110+</h4>
+                <p class="font-bold uppercase tracking-tighter text-sm mb-6">Countries Reached</p>
+                <h4 class="text-5xl font-bold text-red-600 mb-2">2B+</h4>
+                <p class="font-bold uppercase tracking-tighter text-sm">Annual Views</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Talks Grid -->
+    <section class="py-24 px-6 bg-gray-50 dark:bg-zinc-950">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-12 reveal">
+                <div>
+                    <h2 class="text-3xl font-bold uppercase tracking-tighter">Recommended for you</h2>
+                    <div class="w-12 h-1 bg-red-600 mt-2"></div>
+                </div>
+                <a href="#" class="text-sm font-bold uppercase tracking-widest text-red-600 hover:underline">View all talks</a>
+            </div>
+
+            <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Talk Card 1 -->
+                <div class="talk-card group reveal">
+                    <div class="relative aspect-video bg-gray-200 dark:bg-zinc-800 overflow-hidden rounded-sm mb-4">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center">
+                            <i class="fas fa-play text-white text-3xl"></i>
+                        </div>
+                        <span class="absolute bottom-2 right-2 bg-black text-white text-[10px] font-bold px-1.5 py-0.5">14:20</span>
+                    </div>
+                    <h3 class="font-bold leading-tight group-hover:text-red-600 transition-colors cursor-pointer">How to build a brain that never gets tired</h3>
+                    <p class="text-xs text-gray-500 mt-2 uppercase tracking-widest font-bold">Technology • Dr. Ken Wu</p>
+                </div>
+                <!-- Talk Card 2 -->
+                <div class="talk-card group reveal" style="transition-delay: 100ms;">
+                    <div class="relative aspect-video bg-gray-200 dark:bg-zinc-800 overflow-hidden rounded-sm mb-4">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center">
+                            <i class="fas fa-play text-white text-3xl"></i>
+                        </div>
+                        <span class="absolute bottom-2 right-2 bg-black text-white text-[10px] font-bold px-1.5 py-0.5">08:45</span>
+                    </div>
+                    <h3 class="font-bold leading-tight group-hover:text-red-600 transition-colors cursor-pointer">The hidden language of social connection</h3>
+                    <p class="text-xs text-gray-500 mt-2 uppercase tracking-widest font-bold">Science • Amanda Lee</p>
+                </div>
+                <!-- Talk Card 3 -->
+                <div class="talk-card group reveal" style="transition-delay: 200ms;">
+                    <div class="relative aspect-video bg-gray-200 dark:bg-zinc-800 overflow-hidden rounded-sm mb-4">
+                        <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center">
+                            <i class="fas fa-play text-white text-3xl"></i>
+                        </div>
+                        <span class="absolute bottom-2 right-2 bg-black text-white text-[10px] font-bold px-1.5 py-0.5">22:15</span>
+                    </div>
+                    <h3 class="font-bold leading-tight group-hover:text-red-600 transition-colors cursor-pointer">Designing for the next billion users</h3>
+                    <p class="text-xs text-gray-500 mt-2 uppercase tracking-widest font-bold">Design • Marcus Vane</p>
+                </div>
+                <!-- Talk Card 4 -->
+                <div class="talk-card group reveal" style="transition-delay: 300ms;">
+                    <div class="relative aspect-video bg-gray-200 dark:bg-zinc-800 overflow-hidden rounded-sm mb-4">
+                        <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <div class="play-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center">
+                            <i class="fas fa-play text-white text-3xl"></i>
+                        </div>
+                        <span class="absolute bottom-2 right-2 bg-black text-white text-[10px] font-bold px-1.5 py-0.5">12:30</span>
+                    </div>
+                    <h3 class="font-bold leading-tight group-hover:text-red-600 transition-colors cursor-pointer">Why we need to talk about space debris</h3>
+                    <p class="text-xs text-gray-500 mt-2 uppercase tracking-widest font-bold">Nature • Prof. Alan Gills</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nomination CTA -->
+    <section id="nominate" class="py-24 px-6 bg-red-600 text-white">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <h2 class="text-5xl font-extrabold mb-6 uppercase tracking-tighter">Do you know a speaker?</h2>
+            <p class="text-xl mb-10 opacity-90 font-light">We are always looking for new voices and world-changing ideas. Nominate yourself or someone else to take the stage at our next event.</p>
+            
+            <form id="nominationForm" class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+                <input type="email" required placeholder="Enter your email to get started" class="flex-1 px-6 py-4 bg-white/10 border border-white/20 rounded-sm focus:bg-white focus:text-black outline-none transition-all placeholder:text-white/60">
+                <button type="submit" class="px-10 py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-zinc-900 transition-all">Nominate</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-6 bg-black text-white">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
+            <div class="col-span-2 lg:col-span-2 space-y-6">
+                <div class="text-3xl font-bold tracking-tighter">
+                    <span class="text-red-600">IGNITE</span>
+                </div>
+                <p class="text-gray-500 text-sm max-w-xs">A non-profit devoted to spreading ideas, usually in the form of short, powerful talks. Ignite covers almost all topics — from science to business to global issues.</p>
+                <div class="flex gap-4 text-xl">
+                    <a href="#" class="hover:text-red-600 transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-red-600 transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-red-600 transition-colors"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="hover:text-red-600 transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <h4 class="font-bold uppercase text-xs tracking-widest text-red-600">Programs</h4>
+                <ul class="text-gray-400 text-sm space-y-2">
+                    <li><a href="#" class="hover:text-white">Ignite Conferences</a></li>
+                    <li><a href="#" class="hover:text-white">Ignitex Events</a></li>
+                    <li><a href="#" class="hover:text-white">Ignite Fellows</a></li>
+                    <li><a href="#" class="hover:text-white">Ignite Ed</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-bold uppercase text-xs tracking-widest text-red-600">Ways to get help</h4>
+                <ul class="text-gray-400 text-sm space-y-2">
+                    <li><a href="#" class="hover:text-white">For Speakers</a></li>
+                    <li><a href="#" class="hover:text-white">For Partners</a></li>
+                    <li><a href="#" class="hover:text-white">For Educators</a></li>
+                    <li><a href="#" class="hover:text-white">Help Center</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-bold uppercase text-xs tracking-widest text-red-600">Follow Ignite</h4>
+                <ul class="text-gray-400 text-sm space-y-2">
+                    <li><a href="#" class="hover:text-white">Newsletter</a></li>
+                    <li><a href="#" class="hover:text-white">Ignite Blog</a></li>
+                    <li><a href="#" class="hover:text-white">Podcasts</a></li>
+                    <li><a href="#" class="hover:text-white">Mobile Apps</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-20 mt-20 border-t border-zinc-900 flex flex-col md:flex-row justify-between text-gray-600 text-xs gap-4">
+            <p>© 2026 IGNITE ORGANIZATION. ALL RIGHTS RESERVED.</p>
+            <div class="flex gap-6 uppercase tracking-widest">
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+                <a href="#" class="hover:text-white">Terms of Use</a>
+                <a href="#" class="hover:text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast">Nomination received! Thank you for the idea. 🚀</div>
+
+    <script>
+        // Theme Toggling
+        const body = document.body;
+        const themeToggle = document.getElementById('themeToggle');
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.replace('light', 'dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light')) {
+                body.classList.replace('light', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.replace('dark', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+        closeMenu.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Reveal on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Form Submission
+        const nominationForm = document.getElementById('nominationForm');
+        const toast = document.getElementById('toast');
+
+        nominationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+            nominationForm.reset();
+        });
+    </script>
+</body>
+</html>
