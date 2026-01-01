@@ -58,9 +58,12 @@
             transform: translateY(0);
         }
 
-        .partner-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--ted-red);
+        .input-field {
+            @apply w-full px-6 py-4 bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-sm focus:border-red-600 outline-none transition-all;
+        }
+
+        .partner-logo {
+            @apply h-12 md:h-16 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer;
         }
 
         #toast {
@@ -87,10 +90,6 @@
 
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-
-        .input-field {
-            @apply w-full px-6 py-4 bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-sm focus:border-red-600 outline-none transition-all;
-        }
     </style>
 </head>
 <body class="light">
@@ -98,14 +97,13 @@
     <!-- Navbar -->
     <nav class="fixed w-full z-50 transition-all duration-300 glass" id="navbar">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-            <div class="nav-logo text-3xl font-bold tracking-tighter flex items-center gap-1">
+            <div class="nav-logo text-3xl font-bold tracking-tighter flex items-center gap-1 cursor-pointer" onclick="window.scrollTo(0,0)">
                 <span class="text-red-600">IGNITE</span><span class="text-xs mt-2 uppercase tracking-widest opacity-70">Outreach</span>
             </div>
             
             <div class="hidden md:flex items-center gap-10 font-medium text-xs uppercase tracking-widest">
                 <a href="#about" class="hover:text-red-600 transition-colors">Our Vision</a>
                 <a href="#sessions" class="hover:text-red-600 transition-colors">Sessions</a>
-                <a href="#collaborate" class="hover:text-red-600 transition-colors">Collaborate</a>
                 <a href="#contact" class="px-5 py-2 bg-red-600 text-white hover:bg-black transition-all">Host a Session</a>
                 <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                     <i class="fas fa-moon dark:hidden"></i>
@@ -124,16 +122,14 @@
         <button class="absolute top-6 right-6 text-3xl" id="closeMenu"><i class="fas fa-times"></i></button>
         <a href="#about" class="mobile-link">Our Vision</a>
         <a href="#sessions" class="mobile-link">Sessions</a>
-        <a href="#collaborate" class="mobile-link">Collaborate</a>
         <a href="#contact" class="mobile-link text-red-600">Contact Us</a>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-[90vh] flex items-center pt-20 bg-black text-white relative overflow-hidden">
+    <!-- Page 1: Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20 bg-black text-white relative overflow-hidden">
         <div class="absolute inset-0 opacity-40">
             <div class="absolute top-0 -left-20 w-96 h-96 bg-red-600 rounded-full blur-[150px]"></div>
         </div>
-
         <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
             <div class="space-y-8 reveal active">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-red-600 text-white text-[10px] font-bold uppercase tracking-[0.2em]">
@@ -143,19 +139,18 @@
                     Bringing <span class="text-red-600">Ideas</span> to your Campus.
                 </h1>
                 <p class="text-xl text-gray-300 max-w-lg leading-relaxed font-light">
-                    We conduct live, high-impact talk sessions across Higher Secondary Schools and Colleges to inspire the next generation of innovators.
+                    We conduct live, high-impact talk sessions across Higher Secondary Schools and Colleges in Kerala to inspire innovators.
                 </p>
                 <div class="flex flex-wrap gap-4 pt-4">
                     <a href="#contact" class="px-10 py-4 bg-red-600 text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl">Book a Session</a>
                     <a href="#about" class="px-10 py-4 border-2 border-white/20 text-white font-bold uppercase tracking-widest hover:border-white transition-all">Who We Are</a>
                 </div>
             </div>
-            
             <div class="relative reveal active hidden lg:block">
                 <div class="relative rounded-sm overflow-hidden shadow-2xl border border-white/10">
                     <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=1000" alt="Offline Session" class="w-full h-[500px] object-cover opacity-80">
                     <div class="absolute inset-0 bg-gradient-to-tr from-black/80 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-8 left-8 right-8">
+                    <div class="absolute bottom-8 left-8 right-8 text-white">
                         <div class="flex items-center gap-4 mb-4">
                             <div class="h-px flex-1 bg-red-600"></div>
                             <span class="text-xs uppercase tracking-widest font-bold">Live Interaction</span>
@@ -167,7 +162,7 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- Page 2: About / Vision Section -->
     <section id="about" class="py-24 px-6 border-b dark:border-gray-800">
         <div class="max-w-7xl mx-auto">
             <div class="grid md:grid-cols-2 gap-16 items-start">
@@ -175,7 +170,7 @@
                     <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-red-600 mb-4">The Organization</h2>
                     <h3 class="text-4xl font-bold mb-8 leading-tight">Empowering students through the power of shared knowledge.</h3>
                     <p class="text-lg text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
-                        Ignite Outreach is a dedicated initiative aimed at bridging the gap between industry experts, visionary thinkers, and young students. We believe that Higher Secondary and College students are at a pivotal point in their lives where a single idea can define their future career.
+                        Ignite Outreach is a dedicated initiative aimed at bridging the gap between industry experts, visionary thinkers, and young students. 
                     </p>
                     <p class="text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
                         By conducting offline sessions, we create a physical space for dialogue, mentorship, and inspiration that digital platforms simply cannot replicate.
@@ -185,77 +180,19 @@
                     <div class="p-8 bg-gray-50 dark:bg-zinc-900 rounded-sm">
                         <i class="fas fa-school text-3xl text-red-600 mb-4"></i>
                         <h4 class="font-bold mb-2 uppercase tracking-tighter">School Level</h4>
-                        <p class="text-sm text-gray-500">Foundation building sessions for HS students.</p>
+                        <p class="text-sm text-gray-500">Foundation building for HS students.</p>
                     </div>
                     <div class="p-8 bg-gray-50 dark:bg-zinc-900 rounded-sm">
                         <i class="fas fa-university text-3xl text-red-600 mb-4"></i>
                         <h4 class="font-bold mb-2 uppercase tracking-tighter">College Level</h4>
-                        <p class="text-sm text-gray-500">Innovation and career-focused talks for graduates.</p>
-                    </div>
-                    <div class="p-8 bg-gray-50 dark:bg-zinc-900 rounded-sm">
-                        <i class="fas fa-users text-3xl text-red-600 mb-4"></i>
-                        <h4 class="font-bold mb-2 uppercase tracking-tighter">Live Q&A</h4>
-                        <p class="text-sm text-gray-500">Direct interaction with speakers and experts.</p>
-                    </div>
-                    <div class="p-8 bg-gray-50 dark:bg-zinc-900 rounded-sm">
-                        <i class="fas fa-lightbulb text-3xl text-red-600 mb-4"></i>
-                        <h4 class="font-bold mb-2 uppercase tracking-tighter">Workshops</h4>
-                        <p class="text-sm text-gray-500">Hands-on innovative group activities.</p>
+                        <p class="text-sm text-gray-500">Innovation for graduates.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Collaboration Section -->
-    <section id="collaborate" class="py-24 px-6 bg-gray-50 dark:bg-zinc-950">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-red-600 mb-4">Partnerships</h2>
-                <h3 class="text-4xl font-bold mb-4">Collaboration for Innovation</h3>
-                <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">We work closely with leading government bodies and innovative groups to ensure our sessions bring the best resources to students.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- KSUM -->
-                <div class="partner-card p-10 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 transition-all reveal">
-                    <div class="h-16 flex items-center mb-8">
-                        <h4 class="text-2xl font-black italic tracking-tighter">KSUM</h4>
-                    </div>
-                    <h5 class="font-bold mb-3 uppercase text-sm tracking-widest">Kerala Startup Mission</h5>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">As our primary innovation partner, we collaborate to identify and nurture entrepreneurial talent from the grassroots level.</p>
-                    <div class="w-10 h-1 bg-red-600"></div>
-                </div>
-
-                <!-- Innovative Groups -->
-                <div class="partner-card p-10 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 transition-all reveal" style="transition-delay: 100ms;">
-                    <div class="h-16 flex items-center mb-8">
-                        <i class="fas fa-brain text-4xl text-red-600"></i>
-                    </div>
-                    <h5 class="font-bold mb-3 uppercase text-sm tracking-widest">Innovation Collectives</h5>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">Partnering with local and global innovative groups to bring diverse perspectives on technology and art.</p>
-                    <div class="w-10 h-1 bg-red-600"></div>
-                </div>
-
-                <!-- Industry Leaders -->
-                <div class="partner-card p-10 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 transition-all reveal" style="transition-delay: 200ms;">
-                    <div class="h-16 flex items-center mb-8">
-                        <i class="fas fa-rocket text-4xl text-red-600"></i>
-                    </div>
-                    <h5 class="font-bold mb-3 uppercase text-sm tracking-widest">Tech Partners</h5>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">Connecting schools with industry leaders to provide insights into the future of the professional world.</p>
-                    <div class="w-10 h-1 bg-red-600"></div>
-                </div>
-            </div>
-            
-            <div class="mt-16 p-8 bg-red-600 text-white flex flex-col md:flex-row justify-between items-center gap-8 reveal">
-                <p class="text-xl font-bold">Want to partner with us as a mentor or sponsor?</p>
-                <a href="#contact" class="px-8 py-3 bg-black text-white font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-red-600 transition-all">Get in touch</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
+    <!-- Page 3 Part A: Contact Section -->
     <section id="contact" class="py-24 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-16">
@@ -263,26 +200,17 @@
                     <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-red-600 mb-4">Contact Us</h2>
                     <h3 class="text-5xl font-bold mb-8 uppercase tracking-tighter">Invite Ignite to your <span class="text-red-600">campus.</span></h3>
                     <p class="text-lg text-gray-500 dark:text-gray-400 mb-12 max-w-md leading-relaxed">
-                        Fill out the form to request a session at your institution. Our outreach team will get back to you within 48 hours to discuss scheduling and themes.
+                        Fill out the form to request a session at your institution. Our outreach team will get back to you within 48 hours.
                     </p>
                     
                     <div class="space-y-6">
-                        <div class="flex items-center gap-6 group">
-                            <div class="w-12 h-12 bg-gray-100 dark:bg-zinc-900 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all">
+                        <div class="flex items-center gap-6">
+                            <div class="w-12 h-12 bg-gray-100 dark:bg-zinc-900 flex items-center justify-center text-red-600">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div>
                                 <p class="text-xs uppercase font-bold tracking-widest text-gray-400">Email Us</p>
                                 <p class="font-bold">outreach@ignite-talks.org</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-6 group">
-                            <div class="w-12 h-12 bg-gray-100 dark:bg-zinc-900 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs uppercase font-bold tracking-widest text-gray-400">Headquarters</p>
-                                <p class="font-bold">Innovation Center, Kochi, Kerala</p>
                             </div>
                         </div>
                     </div>
@@ -297,7 +225,7 @@
                             </div>
                             <div class="space-y-2">
                                 <label class="text-[10px] uppercase font-black tracking-widest ml-1">Institution Name</label>
-                                <input type="text" name="institution" required placeholder="University / School Name" class="input-field">
+                                <input type="text" name="institution" required placeholder="University Name" class="input-field">
                             </div>
                         </div>
                         <div class="space-y-2">
@@ -306,9 +234,9 @@
                         </div>
                         <div class="space-y-2">
                             <label class="text-[10px] uppercase font-black tracking-widest ml-1">Your Message</label>
-                            <textarea name="message" required rows="4" placeholder="Briefly describe your requirements or preferred topics..." class="input-field resize-none"></textarea>
+                            <textarea name="message" required rows="4" placeholder="How can we help?" class="input-field resize-none"></textarea>
                         </div>
-                        <button type="submit" class="w-full py-5 bg-red-600 text-white font-bold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl shadow-red-200 dark:shadow-none">
+                        <button type="submit" class="w-full py-5 bg-red-600 text-white font-bold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-xl">
                             Submit Request <i class="fas fa-arrow-right ml-2"></i>
                         </button>
                     </form>
@@ -317,18 +245,49 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-12 px-6 bg-black text-white border-t border-white/5">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="nav-logo text-2xl font-bold tracking-tighter">
-                <span class="text-red-600">IGNITE</span>
+    <!-- Page 3 Part B: Footer -->
+    <footer class="bg-black text-white">
+        <!-- Partnership Section -->
+        <div class="max-w-7xl mx-auto px-6 py-16 border-t border-white/10 text-center">
+            <h4 class="text-xs font-bold uppercase tracking-[0.4em] text-gray-500 mb-10">In Collaboration With</h4>
+            <div class="flex flex-wrap justify-center items-center gap-12 md:gap-24">
+                <!-- Mock Collaboration Logos -->
+                <div class="flex items-center gap-2 partner-logo">
+                    <div class="w-8 h-8 bg-red-600 rounded-full"></div>
+                    <span class="font-black text-xl tracking-tighter text-white">KSUM</span>
+                </div>
+                <div class="flex items-center gap-2 partner-logo">
+                    <i class="fas fa-microchip text-3xl"></i>
+                    <span class="font-bold text-lg text-white">StartupMission</span>
+                </div>
+                <div class="flex items-center gap-2 partner-logo">
+                    <i class="fas fa-graduation-cap text-3xl"></i>
+                    <span class="font-bold text-lg text-white">EduGroups</span>
+                </div>
+                <div class="flex items-center gap-2 partner-logo">
+                    <i class="fas fa-atom text-3xl"></i>
+                    <span class="font-bold text-lg text-white">InnovateKerala</span>
+                </div>
             </div>
-            <div class="flex gap-8 text-gray-500 uppercase tracking-widest text-[10px] font-bold">
-                <a href="#" class="hover:text-red-600">Twitter</a>
-                <a href="#" class="hover:text-red-600">LinkedIn</a>
-                <a href="#" class="hover:text-red-600">Instagram</a>
+        </div>
+
+        <!-- Social and Legal bar -->
+        <div class="max-w-7xl mx-auto px-6 py-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <!-- Social Icons (Left) -->
+            <div class="flex gap-6 text-xl">
+                <a href="#" class="text-gray-500 hover:text-red-600 transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-500 hover:text-red-600 transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-500 hover:text-red-600 transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="text-gray-500 hover:text-red-600 transition-colors"><i class="fab fa-twitter"></i></a>
             </div>
-            <p class="text-[10px] text-gray-600 uppercase tracking-widest">© 2026 Ignite Outreach Kerala. Built for Innovators.</p>
+
+            <!-- Privacy/Terms (Right) -->
+            <div class="flex gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-gray-500">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms & Conditions</a>
+                <span class="text-gray-800 hidden md:block">|</span>
+                <p class="text-gray-600">© 2026 IGNITE ORGANIZATION</p>
+            </div>
         </div>
     </footer>
 
@@ -390,3 +349,4 @@
     </script>
 </body>
 </html>
+
