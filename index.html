@@ -7,16 +7,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500&display=swap');
 
         :root {
             --ted-red: #eb0028;
             --ted-black: #000000;
+            --bg-light: #ffffff;
+            --bg-dark: #0a0a0a;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background-color 0.3s, color 0.3s;
             scroll-behavior: smooth;
         }
 
@@ -24,22 +26,31 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
+        .dark {
+            background-color: var(--bg-dark);
+            color: #f1f5f9;
+        }
+
+        .light {
+            background-color: var(--bg-light);
+            color: #1e293b;
+        }
+
         .glass {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .dark .glass {
-            background: rgba(10, 10, 10, 0.8);
+            background: rgba(10, 10, 10, 0.85);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
         }
 
         .reveal.active {
@@ -48,115 +59,103 @@
         }
 
         .input-field {
-            @apply w-full px-6 py-4 bg-gray-50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700/50 rounded-lg focus:border-red-600 dark:focus:border-red-500 focus:ring-1 focus:ring-red-600 outline-none transition-all duration-300;
+            @apply w-full px-6 py-4 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-sm focus:border-red-600 outline-none transition-all;
         }
 
         .partner-logo {
-            @apply grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer;
+            @apply h-12 md:h-16 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer;
         }
 
         #toast {
             visibility: hidden;
-            min-width: 280px;
+            min-width: 250px;
             background-color: var(--ted-red);
             color: #fff;
             text-align: center;
-            border-radius: 8px;
-            padding: 16px 24px;
+            border-radius: 4px;
+            padding: 16px;
             position: fixed;
             z-index: 1000;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 40px;
+            bottom: 30px;
             font-weight: 600;
-            letter-spacing: 0.025em;
-            box-shadow: 0 20px 40px rgba(235, 0, 40, 0.3);
+            box-shadow: 0 10px 25px rgba(235, 0, 40, 0.3);
         }
 
         #toast.show {
             visibility: visible;
-            animation: fadein 0.6s cubic-bezier(0.22, 1, 0.36, 1), fadeout 0.6s 2.5s cubic-bezier(0.22, 1, 0.36, 1);
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
         }
 
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 40px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 40px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        .light ::-webkit-scrollbar-thumb { background: #ddd; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
-<body class="light bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-slate-100">
+<body class="light">
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 transition-all duration-500 glass" id="navbar">
-        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-5">
-            <div class="nav-logo text-2xl font-bold tracking-tighter flex items-center gap-1 cursor-pointer" onclick="window.scrollTo(0,0)">
-                <span class="text-red-600">IGNITE</span><span class="text-[10px] mt-1.5 uppercase tracking-[0.3em] opacity-60 ml-1">Outreach</span>
+    <nav class="fixed w-full z-50 transition-all duration-300 glass" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+            <div class="nav-logo text-3xl font-bold tracking-tighter flex items-center gap-1 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <span class="text-red-600">IGNITE</span><span class="text-xs mt-2 uppercase tracking-widest opacity-70">Outreach</span>
             </div>
             
-            <div class="hidden md:flex items-center gap-10 font-semibold text-[11px] uppercase tracking-[0.2em]">
-                <a href="#about" class="hover:text-red-600 transition-colors">Vision</a>
+            <div class="hidden md:flex items-center gap-10 font-medium text-xs uppercase tracking-widest">
+                <a href="#about" class="hover:text-red-600 transition-colors">Our Vision</a>
                 <a href="#sessions" class="hover:text-red-600 transition-colors">Sessions</a>
-                <a href="#contact" class="px-6 py-2.5 bg-red-600 text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all rounded-full">Get Started</a>
-                <button id="themeToggle" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-zinc-800 hover:scale-110 transition-transform">
+                <a href="#contact" class="px-5 py-2 bg-red-600 text-white hover:bg-black transition-all">Host a Session</a>
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                     <i class="fas fa-moon dark:hidden"></i>
-                    <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
                 </button>
             </div>
 
             <button class="md:hidden text-2xl" id="menuBtn">
-                <i class="fas fa-bars-staggered"></i>
+                <i class="fas fa-bars"></i>
             </button>
         </div>
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed inset-0 z-[60] bg-white dark:bg-black flex flex-col items-center justify-center gap-10 text-3xl font-bold hidden transition-all">
-        <button class="absolute top-8 right-8 text-3xl" id="closeMenu"><i class="fas fa-times"></i></button>
-        <a href="#about" class="mobile-link hover:text-red-600 transition-colors">Our Vision</a>
-        <a href="#sessions" class="mobile-link hover:text-red-600 transition-colors">Sessions</a>
-        <a href="#contact" class="mobile-link text-red-600">Book Now</a>
+    <div id="mobileMenu" class="fixed inset-0 z-[60] bg-white dark:bg-black flex flex-col items-center justify-center gap-8 text-2xl font-bold hidden">
+        <button class="absolute top-6 right-6 text-3xl" id="closeMenu"><i class="fas fa-times"></i></button>
+        <a href="#about" class="mobile-link">Our Vision</a>
+        <a href="#sessions" class="mobile-link">Sessions</a>
+        <a href="#contact" class="mobile-link text-red-600">Contact Us</a>
     </div>
 
     <!-- Page 1: Hero Section -->
     <section id="home" class="min-h-screen flex items-center pt-20 bg-black text-white relative overflow-hidden">
-        <!-- Modern Background Elements -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-red-600/20 rounded-full blur-[120px]"></div>
-            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-zinc-800/40 rounded-full blur-[100px]"></div>
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+        <div class="absolute inset-0 opacity-40">
+            <div class="absolute top-0 -left-20 w-96 h-96 bg-red-600 rounded-full blur-[150px]"></div>
         </div>
-
-        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10">
-            <div class="space-y-10 reveal active">
-                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white text-[10px] font-bold uppercase tracking-[0.3em]">
-                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-                    Kerala's Premier Outreach
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="space-y-8 reveal active">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-red-600 text-white text-[10px] font-bold uppercase tracking-[0.2em]">
+                    Igniting Minds Offline
                 </div>
-                <h1 class="text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter">
-                    Fueling <br><span class="text-red-600">Future</span> <br>Leaders.
+                <h1 class="text-6xl md:text-7xl font-extrabold leading-tight">
+                    Bringing <span class="text-red-600">Ideas</span> to your Campus.
                 </h1>
-                <p class="text-lg text-zinc-400 max-w-lg leading-relaxed font-light">
-                    Transforming academic environments through high-impact, face-to-face sessions with world-class mentors and industry pioneers.
+                <p class="text-xl text-gray-300 max-w-lg leading-relaxed font-light">
+                    We conduct live, high-impact talk sessions across Higher Secondary Schools and Colleges in Kerala to inspire innovators.
                 </p>
-                <div class="flex flex-wrap gap-6 pt-4">
-                    <a href="#contact" class="group relative px-10 py-5 bg-red-600 text-white font-bold uppercase tracking-widest overflow-hidden transition-all rounded-sm">
-                        <span class="relative z-10">Host a session</span>
-                        <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <style> .group:hover span { color: black; } </style>
-                    </a>
-                    <a href="#about" class="px-10 py-5 border border-white/20 text-white font-bold uppercase tracking-widest hover:bg-white/10 transition-all rounded-sm">Explore Vision</a>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#contact" class="px-10 py-4 bg-red-600 text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all shadow-xl">Book a Session</a>
+                    <a href="#about" class="px-10 py-4 border-2 border-white/20 text-white font-bold uppercase tracking-widest hover:border-white transition-all">Who We Are</a>
                 </div>
             </div>
             <div class="relative reveal active hidden lg:block">
-                <div class="relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-zinc-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                    <div class="relative rounded-lg overflow-hidden border border-white/10 aspect-[4/5]">
-                        <img src="https://images.unsplash.com/photo-1475721027785-f74dea9f2672?auto=format&fit=crop&q=80&w=1200" alt="Session" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="relative rounded-sm overflow-hidden shadow-2xl border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=1000" alt="Offline Session" class="w-full h-[500px] object-cover opacity-80">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-8 left-8 right-8 text-white">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="h-px flex-1 bg-red-600"></div>
+                            <span class="text-xs uppercase tracking-widest font-bold">Live Interaction</span>
+                        </div>
+                        <h3 class="text-3xl font-bold">Not just a talk, but a spark for change.</h3>
                     </div>
                 </div>
             </div>
@@ -164,32 +163,29 @@
     </section>
 
     <!-- Page 2: About / Vision Section -->
-    <section id="about" class="py-32 px-6">
+    <section id="about" class="py-24 px-6 border-b dark:border-gray-800">
         <div class="max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-24 items-center">
+            <div class="grid md:grid-cols-2 gap-16 items-start">
                 <div class="reveal">
-                    <div class="w-12 h-1 bg-red-600 mb-8"></div>
-                    <h2 class="text-xs font-black uppercase tracking-[0.4em] text-red-600 mb-6">The Initiative</h2>
-                    <h3 class="text-5xl font-bold mb-10 leading-[1.1] tracking-tighter dark:text-white">Connecting raw talent with real experience.</h3>
-                    <div class="space-y-6 text-lg text-slate-500 dark:text-zinc-400 font-light leading-relaxed">
-                        <p>Ignite Outreach isn't just an organization; it's a movement to decentralize high-quality mentorship. We believe the best ideas spark in physical rooms where energy is shared.</p>
-                        <p>Our curriculum is designed to push students beyond textbooks, focusing on critical thinking, ethical innovation, and community leadership.</p>
-                    </div>
+                    <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-red-600 mb-4">The Organization</h2>
+                    <h3 class="text-4xl font-bold mb-8 leading-tight">Empowering students through the power of shared knowledge.</h3>
+                    <p class="text-lg text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
+                        Ignite Outreach is a dedicated initiative aimed at bridging the gap between industry experts, visionary thinkers, and young students. 
+                    </p>
+                    <p class="text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
+                        By conducting offline sessions, we create a physical space for dialogue, mentorship, and inspiration that digital platforms simply cannot replicate.
+                    </p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
-                    <div class="p-10 bg-gray-50 dark:bg-zinc-900 border border-transparent dark:border-white/5 rounded-2xl hover:border-red-600/30 transition-all group">
-                        <div class="w-14 h-14 bg-red-600/10 text-red-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-red-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <h4 class="text-xl font-bold mb-3 tracking-tight dark:text-white">Innovation</h4>
-                        <p class="text-sm text-slate-500 dark:text-zinc-500">Helping students navigate the modern startup ecosystem.</p>
+                <div class="grid grid-cols-2 gap-4 reveal">
+                    <div class="p-8 bg-gray-50 dark:bg-zinc-900 rounded-sm">
+                        <i class="fas fa-school text-3xl text-red-600 mb-4"></i>
+                        <h4 class="font-bold mb-2 uppercase tracking-tighter">School Level</h4>
+                        <p class="text-sm text-gray-500">Foundation building for HS students.</p>
                     </div>
-                    <div class="p-10 bg-gray-50 dark:bg-zinc-900 border border-transparent dark:border-white/5 rounded-2xl hover:border-red-600/30 transition-all group">
-                        <div class="w-14 h-14 bg-red-600/10 text-red-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-red-600 group-hover:text-white transition-colors">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h4 class="text-xl font-bold mb-3 tracking-tight dark:text-white">Community</h4>
-                        <p class="text-sm text-slate-500 dark:text-zinc-500">Building a lifelong network of thinkers and doers.</p>
+                    <div class="p-8 bg-gray-50 dark:bg-zinc-900 rounded-sm">
+                        <i class="fas fa-university text-3xl text-red-600 mb-4"></i>
+                        <h4 class="font-bold mb-2 uppercase tracking-tighter">College Level</h4>
+                        <p class="text-sm text-gray-500">Innovation for graduates.</p>
                     </div>
                 </div>
             </div>
@@ -197,51 +193,51 @@
     </section>
 
     <!-- Page 3 Part A: Contact Section -->
-    <section id="contact" class="py-32 px-6 bg-slate-50 dark:bg-[#0c0c0c] transition-colors duration-500">
+    <section id="contact" class="py-24 px-6 bg-gray-50 dark:bg-zinc-950 transition-colors duration-300">
         <div class="max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <div class="reveal">
-                    <h2 class="text-[11px] font-black uppercase tracking-[0.5em] text-red-600 mb-6">Contact</h2>
-                    <h3 class="text-6xl font-black mb-10 tracking-tighter dark:text-white">Let's <br>Ignite Your <br><span class="text-red-600">Campus.</span></h3>
-                    <p class="text-xl text-slate-500 dark:text-zinc-400 mb-12 max-w-sm font-light">
-                        Scale your institution's exposure. Start the conversation by filling out the form.
+                    <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-red-600 mb-4">Contact Us</h2>
+                    <h3 class="text-5xl font-bold mb-8 uppercase tracking-tighter text-gray-900 dark:text-white">Invite Ignite to your <span class="text-red-600">campus.</span></h3>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-md leading-relaxed">
+                        Fill out the form to request a session at your institution. Our outreach team will get back to you within 48 hours.
                     </p>
                     
-                    <div class="p-8 bg-white dark:bg-zinc-900/50 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-xl inline-block">
-                        <div class="flex items-center gap-6">
-                            <div class="w-14 h-14 bg-red-600 text-white flex items-center justify-center rounded-full text-xl shadow-lg shadow-red-600/20">
-                                <i class="fas fa-paper-plane"></i>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-6 group">
+                            <div class="w-12 h-12 bg-white dark:bg-zinc-900 flex items-center justify-center text-red-600 shadow-sm border border-gray-100 dark:border-zinc-800 transition-all group-hover:bg-red-600 group-hover:text-white">
+                                <i class="fas fa-envelope"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] uppercase font-black tracking-widest text-gray-400 mb-1">Direct Line</p>
-                                <p class="text-lg font-bold dark:text-white">hello@igniteoutreach.org</p>
+                                <p class="text-[10px] uppercase font-black tracking-widest text-gray-400">Email Us</p>
+                                <p class="font-bold text-gray-900 dark:text-white">outreach@ignite-talks.org</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="reveal bg-white dark:bg-zinc-900 p-8 md:p-14 rounded-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] border border-gray-100 dark:border-zinc-800 transition-all">
-                    <form id="contactForm" class="grid gap-8">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div class="space-y-3">
-                                <label class="text-[10px] uppercase font-black tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Your Name</label>
-                                <input type="text" name="name" required placeholder="Full Name" class="input-field dark:text-white">
+                <div class="reveal bg-white dark:bg-zinc-900 p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-gray-100 dark:border-zinc-800 rounded-sm transition-all">
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase font-black tracking-widest ml-1 text-gray-500 dark:text-gray-400">Full Name</label>
+                                <input type="text" name="name" required placeholder="John Doe" class="input-field text-gray-900 dark:text-white">
                             </div>
-                            <div class="space-y-3">
-                                <label class="text-[10px] uppercase font-black tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Institution</label>
-                                <input type="text" name="institution" required placeholder="School/College Name" class="input-field dark:text-white">
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase font-black tracking-widest ml-1 text-gray-500 dark:text-gray-400">Institution Name</label>
+                                <input type="text" name="institution" required placeholder="University Name" class="input-field text-gray-900 dark:text-white">
                             </div>
                         </div>
-                        <div class="space-y-3">
-                            <label class="text-[10px] uppercase font-black tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Email</label>
-                            <input type="email" name="email" required placeholder="official@edu.in" class="input-field dark:text-white">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase font-black tracking-widest ml-1 text-gray-500 dark:text-gray-400">Email Address</label>
+                            <input type="email" name="email" required placeholder="contact@institution.edu" class="input-field text-gray-900 dark:text-white">
                         </div>
-                        <div class="space-y-3">
-                            <label class="text-[10px] uppercase font-black tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Message</label>
-                            <textarea name="message" required rows="4" placeholder="Brief about the event..." class="input-field dark:text-white resize-none"></textarea>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase font-black tracking-widest ml-1 text-gray-500 dark:text-gray-400">Your Message</label>
+                            <textarea name="message" required rows="4" placeholder="How can we help?" class="input-field text-gray-900 dark:text-white resize-none"></textarea>
                         </div>
-                        <button type="submit" class="w-full py-5 bg-red-600 text-white font-bold uppercase tracking-[0.3em] hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all rounded-xl shadow-2xl shadow-red-600/20 flex items-center justify-center gap-4">
-                            Send Request <i class="fas fa-chevron-right text-xs"></i>
+                        <button type="submit" class="w-full py-5 bg-red-600 text-white font-bold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-lg hover:shadow-red-500/10">
+                            Submit Request <i class="fas fa-arrow-right ml-2"></i>
                         </button>
                     </form>
                 </div>
@@ -250,129 +246,105 @@
     </section>
 
     <!-- Page 3 Part B: Footer -->
-    <footer class="bg-[#050505] text-white">
+    <footer class="bg-black text-white">
         <!-- Partnership Section -->
-        <div class="max-w-7xl mx-auto px-6 py-20 border-t border-white/5 text-center">
-            <h4 class="text-[10px] font-black uppercase tracking-[0.5em] text-zinc-600 mb-14">In Strategic Collaboration</h4>
-            <div class="flex flex-wrap justify-center items-center gap-12 md:gap-32">
-                <div class="flex items-center gap-3 partner-logo">
-                    <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center font-black text-white">K</div>
-                    <span class="font-bold text-xl tracking-tighter text-white">KSUM</span>
+        <div class="max-w-7xl mx-auto px-6 py-16 border-t border-white/10 text-center">
+            <h4 class="text-xs font-bold uppercase tracking-[0.4em] text-gray-500 mb-10">In Collaboration With</h4>
+            <div class="flex flex-wrap justify-center items-center gap-12 md:gap-24">
+                <!-- Mock Collaboration Logos -->
+                <div class="flex items-center gap-2 partner-logo">
+                    <div class="w-8 h-8 bg-red-600 rounded-full"></div>
+                    <span class="font-black text-xl tracking-tighter text-white">KSUM</span>
                 </div>
-                <div class="flex items-center gap-3 partner-logo">
-                    <i class="fas fa-shield-halved text-4xl"></i>
-                    <span class="font-bold text-xl text-white">StartupMission</span>
+                <div class="flex items-center gap-2 partner-logo">
+                    <i class="fas fa-microchip text-3xl"></i>
+                    <span class="font-bold text-lg text-white">StartupMission</span>
                 </div>
-                <div class="flex items-center gap-3 partner-logo">
-                    <i class="fas fa-scroll text-4xl"></i>
-                    <span class="font-bold text-xl text-white">Govt_Kerala</span>
+                <div class="flex items-center gap-2 partner-logo">
+                    <i class="fas fa-graduation-cap text-3xl"></i>
+                    <span class="font-bold text-lg text-white">EduGroups</span>
                 </div>
-                <div class="flex items-center gap-3 partner-logo">
-                    <i class="fas fa-brain text-4xl"></i>
-                    <span class="font-bold text-xl text-white">AI_Node</span>
+                <div class="flex items-center gap-2 partner-logo">
+                    <i class="fas fa-atom text-3xl"></i>
+                    <span class="font-bold text-lg text-white">InnovateKerala</span>
                 </div>
             </div>
         </div>
 
         <!-- Social and Legal bar -->
-        <div class="max-w-7xl mx-auto px-6 py-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex gap-8 text-xl">
-                <a href="#" class="text-zinc-600 hover:text-white transition-all hover:scale-125"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="text-zinc-600 hover:text-white transition-all hover:scale-125"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="text-zinc-600 hover:text-white transition-all hover:scale-125"><i class="fab fa-x-twitter"></i></a>
+        <div class="max-w-7xl mx-auto px-6 py-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <!-- Social Icons (Left) -->
+            <div class="flex gap-6 text-xl">
+                <a href="#" class="text-gray-500 hover:text-red-600 transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-500 hover:text-red-600 transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-500 hover:text-red-600 transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="text-gray-500 hover:text-red-600 transition-colors"><i class="fab fa-twitter"></i></a>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-500">
-                <a href="#" class="hover:text-red-500 transition-colors">Privacy</a>
-                <a href="#" class="hover:text-red-500 transition-colors">Terms</a>
-                <p class="text-zinc-700">© 2026 IGNITE OUTREACH</p>
+            <!-- Privacy/Terms (Right) -->
+            <div class="flex gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-gray-500">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms & Conditions</a>
+                <span class="text-gray-800 hidden md:block">|</span>
+                <p class="text-gray-600">© 2026 IGNITE ORGANIZATION</p>
             </div>
         </div>
     </footer>
 
     <!-- Toast Notification -->
-    <div id="toast">Your request has been delivered. 🚀</div>
+    <div id="toast">Request sent! We'll contact you soon. 🚀</div>
 
     <script>
-        // Smooth Theme Toggling
+        // Theme Toggling
         const body = document.body;
         const themeToggle = document.getElementById('themeToggle');
         
-        // Load initial theme
         if (localStorage.getItem('theme') === 'dark') {
             body.classList.replace('light', 'dark');
         }
 
         themeToggle.addEventListener('click', () => {
-            const isDark = body.classList.contains('dark');
-            if (isDark) {
-                body.classList.replace('dark', 'light');
-                localStorage.setItem('theme', 'light');
-            } else {
+            if (body.classList.contains('light')) {
                 body.classList.replace('light', 'dark');
                 localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.replace('dark', 'light');
+                localStorage.setItem('theme', 'light');
             }
         });
 
-        // Mobile Menu Logic
+        // Mobile Menu
         const menuBtn = document.getElementById('menuBtn');
         const closeMenu = document.getElementById('closeMenu');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
 
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('hidden');
-            mobileMenu.classList.add('flex');
-        });
-        
-        closeMenu.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-        });
-
+        menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+        closeMenu.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
 
-        // Intersection Observer for Animations
+        // Reveal on Scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Professional Form Handling
+        // Form Submission
         const contactForm = document.getElementById('contactForm');
         const toast = document.getElementById('toast');
 
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Simulate API Call
-            const btn = e.target.querySelector('button');
-            const originalHtml = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            
-            setTimeout(() => {
-                toast.className = "show";
-                btn.disabled = false;
-                btn.innerHTML = originalHtml;
-                contactForm.reset();
-                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-            }, 1500);
-        });
-
-        // Navbar Shadow on Scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-xl');
-            } else {
-                nav.classList.remove('shadow-xl');
-            }
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+            contactForm.reset();
         });
     </script>
 </body>
